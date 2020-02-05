@@ -1,0 +1,15 @@
+{
+  "name": "top hat",
+  "behaviours" : {
+    "posh" : "2",
+    "funny" : "1.5"
+  },
+  "dress" : { 
+    "fancy" : "2"
+  },
+  "cost" : "100",
+  "age" : {
+    "min" : "40",
+    "max" : "99"
+  }
+}

@@ -1,3 +1,6 @@
 Move include file, or restructure better
-Add more functionality
-Plan system diagram
+Deal with dependencies better, externs maybe
+ - jsonlint
+Incorporate jsonlint into build script
+Add json-parser tests
+Add more functionalityto json parser
