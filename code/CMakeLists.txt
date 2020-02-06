@@ -8,6 +8,7 @@ project (giblet-world)  # project name
 
 # Subdirectories
 # These dirs must contain a CMakeLists.txt
+add_subdirectory(test)
 add_subdirectory(src/json-reader)
 add_subdirectory(src/giblet-creator)
 add_subdirectory(src/giblet-world)

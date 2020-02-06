@@ -11,9 +11,12 @@ cd build/
 
 # Call cmake on the directory containing CMakeLists and location of the source code
 # This generates the makefile
-cmake ..
+cmake .. || exit 1  # exit of does not succeed
 
 # Execute the makefile generated above
-make #VERBOSE=1 # Uncomment the verbose to help if not building
+make || exit 1 #VERBOSE=1 # Uncomment the verbose to help if not building
 
+cd ..
 
+echo "Linting json files"
+jsonlint-php src/json-reader/*.json
