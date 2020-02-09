@@ -1,0 +1,25 @@
+{
+ "entries": [
+    {
+      "name": "name TEST",
+      "behaviours" : [
+        {
+          "name": "behaviour TEST",
+          "multiplier" : 2
+        }
+      ],
+      "styles" : [
+        {
+          "name": "style TEST",
+          "multiplier" : 2
+        }
+      ],
+      "cost" : 100,
+      "age" : {
+        "min" : 11,
+        "max" : 99,
+        "multiplier": 2
+      }
+    }
+  ]
+}

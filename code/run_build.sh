@@ -18,5 +18,10 @@ make || exit 1 #VERBOSE=1 # Uncomment the verbose to help if not building
 
 cd ..
 
+echo ""
 echo "Linting json files"
 jsonlint-php src/json-reader/*.json
+
+echo ""
+echo "Running tests"
+run-parts ./build/test/

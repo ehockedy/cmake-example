@@ -1,15 +1,72 @@
 {
+ "$schema" : "giblet_accessories_schema.json",
+ "entries": [
+{
   "name": "top hat",
-  "behaviours" : {
-    "posh" : "2",
-    "funny" : "1.5"
-  },
-  "dress" : { 
-    "fancy" : "2"
-  },
-  "cost" : "100",
+  "behaviours" : [
+    {
+      "name": "posh",
+      "multiplier" : 2
+    }
+  ],
+  "styles" : [ 
+    { 
+      "name": "fancy",
+      "multiplier" : 2
+    }
+  ],
+  "cost" : 100,
   "age" : {
-    "min" : "40",
-    "max" : "99"
+    "min" : 40,
+    "max" : 99,
+    "multiplier": 2
   }
+},
+{
+  "name": "bow tie",
+  "behaviours" : [
+    {
+      "name": "posh",
+      "multiplier": 2
+    },
+    {
+      "name": "funny",
+      "multiplier": 2
+    }
+  ],
+  "styles" : [ 
+    { 
+      "name": "fancy",
+      "multiplier" : 2
+    }
+  ],
+  "cost" : 30,
+  "age" : {
+    "min" : 20,
+    "max" : 79,
+    "multiplier": 2 
+  }
+},
+{
+  "name": "red nose",
+  "behaviours" : [
+    {
+      "name": "funny",
+      "multiplier" : 2
+    }
+  ],
+  "styles" : [ 
+    { 
+      "name": "weird",
+      "multiplier" : 2
+    }
+  ],
+  "cost" : 20,
+  "age" : {
+    "min" : 20,
+    "max" : 45,
+    "multiplier": 1.5
+  }
+}
+]
 }

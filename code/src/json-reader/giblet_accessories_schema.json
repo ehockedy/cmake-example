@@ -1,0 +1,67 @@
+{
+  "id" : "https://github.com/ehockedy/giblet-world",
+  "$schema" : "http://json-schema.org/draft-04/schema",
+  "title" : "Giblet World accessories schema",
+  "version" : "1.0.0",
+  "type" : "object",
+  "properties" : {
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/accessory" }
+    }
+  },
+  "definitions": {
+    "accessory": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/name"
+        },
+        "behaviours": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/name"
+              },
+              "multiplier": {
+                "$ref": "#/definitions/multiplier"
+              }
+            }
+          }
+        },
+        "styles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/name"
+              },
+              "multiplier": {
+                "$ref": "#/definitions/multiplier"
+              }
+            }
+          }
+        },
+        "cost": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 500
+        }
+      }
+    },
+    "name" : {
+      "type" : "string",
+      "description" : "Name of the object (accessory, behaviour, style) that will be shown to the user. Also the main identifier.",
+      "pattern" : "^[a-zA-Z ]+$"
+    },
+    "multiplier": {
+      "type": "number",
+      "description": "Value corresponding to how compatiable this item is with a character with this behaviour",
+      "minimum": 0.25,
+      "maximum": 3
+    }
+  }
+}
