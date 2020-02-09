@@ -3,5 +3,8 @@ include_directories(../include)
 include_directories(../third_party)
 
 add_executable(json-reader-tests json-reader-tests.cpp)
-add_dependencies(json-reader-tests json-reader) # not sure how much need this
+add_executable(json-use-tests json-use-tests.cpp)
+add_dependencies(json-reader-tests json-reader)
+add_dependencies(json-use-tests json-reader)
 target_link_libraries(json-reader-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a)
+target_link_libraries(json-use-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a)

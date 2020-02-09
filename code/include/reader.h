@@ -14,6 +14,7 @@ public:
   bool Validate(const char* schema_filename, bool print_error=false);
   void PrintJsonEntryWithName(std::string name);
   rapidjson::Document* GetJsonFilePtr();
+  rapidjson::Document& GetJsonFileRef();
 private:
   rapidjson::Document json_file; 
 };

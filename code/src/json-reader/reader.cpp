@@ -56,7 +56,6 @@ bool JsonReader::Validate(const char* schema_filename, bool print_error) {
     return false;
   }
   return true;
-  
 }
 
 void JsonReader::PrintJsonEntryWithName(std::string name) {
@@ -73,4 +72,8 @@ void JsonReader::PrintJsonEntryWithName(std::string name) {
 
 rapidjson::Document* JsonReader::GetJsonFilePtr() {
   return &json_file;
+}
+
+rapidjson::Document& JsonReader::GetJsonFileRef() {
+  return json_file;
 }
