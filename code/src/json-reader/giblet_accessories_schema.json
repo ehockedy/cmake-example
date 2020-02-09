@@ -23,12 +23,19 @@
             "type": "object",
             "properties": {
               "name": {
-                "$ref": "#/definitions/name"
+                "allOf": [
+                  { "$ref": "#/definitions/name" },
+                  { "enum": [
+                      "posh",
+                      "funny"
+                    ]
+                  }
+                ]
               },
               "multiplier": {
                 "$ref": "#/definitions/multiplier"
               }
-            }
+            }  
           }
         },
         "styles": {
@@ -37,7 +44,14 @@
             "type": "object",
             "properties": {
               "name": {
-                "$ref": "#/definitions/name"
+                "allOf": [
+                  { "$ref": "#/definitions/name" }, 
+                  { "enum": [
+                      "fancy",
+                      "weird",
+                      "smart"
+                  ] }
+                ]
               },
               "multiplier": {
                 "$ref": "#/definitions/multiplier"

@@ -25,7 +25,7 @@ bool JsonReader::OpenFile(const char* filename) {
 }
 
 // TODO remove repeated code
-bool JsonReader::Validate(const char* schema_filename) {
+bool JsonReader::Validate(const char* schema_filename, bool print_error) {
   // Load schema file
   FILE* fp = fopen(schema_filename, "rb");
   char readBuffer[65536];
@@ -44,13 +44,15 @@ bool JsonReader::Validate(const char* schema_filename) {
   rapidjson::SchemaValidator validator(schema);
   if (!json_file.Accept(validator)) {
     // Input json file does not line up with schema.
-    rapidjson::StringBuffer sb;
-    validator.GetInvalidSchemaPointer().StringifyUriFragment(sb);
-    printf("Invalid schema: %s\n", sb.GetString());
-    printf("Invalid keyword: %s\n", validator.GetInvalidSchemaKeyword());
-    sb.Clear();
-    validator.GetInvalidDocumentPointer().StringifyUriFragment(sb);
-    printf("Invalid document: %s\n", sb.GetString());
+    if (print_error) {
+      rapidjson::StringBuffer sb;
+      validator.GetInvalidSchemaPointer().StringifyUriFragment(sb);
+      printf("Invalid schema: %s\n", sb.GetString());
+      printf("Invalid keyword: %s\n", validator.GetInvalidSchemaKeyword());
+      sb.Clear();
+      validator.GetInvalidDocumentPointer().StringifyUriFragment(sb);
+      printf("Invalid document: %s\n", sb.GetString());
+    }
     return false;
   }
   return true;

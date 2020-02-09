@@ -1,16 +1,16 @@
 {
  "entries": [
     {
-      "name": "name TEST",
+      "name": "top hat",
       "behaviours" : [
         {
-          "name": "behaviour TEST",
+          "name": "posh",
           "multiplier" : 2
         }
       ],
       "styles" : [
         {
-          "name": "style TEST",
+          "name": "smart",
           "multiplier" : 2
         }
       ],

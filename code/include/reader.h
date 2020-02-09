@@ -11,7 +11,7 @@ public:
   JsonReader();
   ~JsonReader();
   bool OpenFile(const char* filename);
-  bool Validate(const char* schema_filename);
+  bool Validate(const char* schema_filename, bool print_error=false);
   void PrintJsonEntryWithName(std::string name);
   rapidjson::Document* GetJsonFilePtr();
 private:
