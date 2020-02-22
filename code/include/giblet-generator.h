@@ -1,15 +1,17 @@
-#include <vector>
+#ifndef INCLUDE_GIBLET_GENERATOR_H_
+#define INCLUDE_GIBLET_GENERATOR_H_
+
+#include "giblet-accessory.h"
+
+#include "reader.h"
 
 class GibletGenerator {
 public:
   GibletGenerator();
   ~GibletGenerator();
-  int GenerateUniqueAccessories(unsigned int num_accessories);
-  void GenerateUniqueBody(unsigned int num_bodies);
-  void GenerateUniqueFeet(unsigned int num_feet);
+  int GenerateUniqueAccessories(const unsigned int num_accessories);
 private:
-  std::vector<unsigned int> accessories;
-  //Giblet accessory1;
-  //std::vector<GibletPart> bodies;
-  //std::vector<GibletPart> feet;
+  GibletAccessory accessory;
 };
+
+# endif //INCLUDE_GIBLET_GENERATOR_H_
