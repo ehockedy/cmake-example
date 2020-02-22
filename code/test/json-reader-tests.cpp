@@ -15,7 +15,7 @@ TEST_CASE("Schema validates json", "[json-reader]") {
 TEST_CASE("Json not valid - invalid name", "[json-reader]") {
   JsonReader jr;
   jr.OpenFile("test/json-test-files/test.json");
-  rapidjson::Document* d = jr.GetJsonFilePtr();
+  rapidjson::Document* d = jr.GetJsonFilePtr(); //TODO fix Ref being private
   (*d)["entries"][0]["name"] = "000";
   bool isValid = jr.Validate("src/json-reader/giblet_accessories_schema.json");
   REQUIRE(!isValid);
@@ -121,3 +121,44 @@ TEST_CASE("Json not valid - style not in list of options", "[json-reader]") {
   bool isValid = jr.Validate("src/json-reader/giblet_accessories_schema.json");
   REQUIRE(!isValid);
 }
+TEST_CASE("Json not valid - out of range age given - min too low", "[json-reader]") {
+  JsonReader jr;
+  jr.OpenFile("test/json-test-files/test.json");
+  rapidjson::Document* d = jr.GetJsonFilePtr();
+  (*d)["entries"][0]["age_range"]["min"] = 10;
+  bool isValid = jr.Validate("src/json-reader/giblet_accessories_schema.json");
+  REQUIRE(!isValid);
+}
+TEST_CASE("Json not valid - out of range age given - min too high", "[json-reader]") {
+  JsonReader jr;
+  jr.OpenFile("test/json-test-files/test.json");
+  rapidjson::Document* d = jr.GetJsonFilePtr();
+  (*d)["entries"][0]["age_range"]["min"] = 100;
+  bool isValid = jr.Validate("src/json-reader/giblet_accessories_schema.json");
+  REQUIRE(!isValid);
+}
+TEST_CASE("Json not valid - out of range age given - max too low", "[json-reader]") {
+  JsonReader jr;
+  jr.OpenFile("test/json-test-files/test.json");
+  rapidjson::Document* d = jr.GetJsonFilePtr();
+  (*d)["entries"][0]["age_range"]["max"] = 10;
+  bool isValid = jr.Validate("src/json-reader/giblet_accessories_schema.json");
+  REQUIRE(!isValid);
+}
+TEST_CASE("Json not valid - out of range age given - max too high", "[json-reader]") {
+  JsonReader jr;
+  jr.OpenFile("test/json-test-files/test.json");
+  rapidjson::Document* d = jr.GetJsonFilePtr();
+  (*d)["entries"][0]["age_range"]["max"] = 100;
+  bool isValid = jr.Validate("src/json-reader/giblet_accessories_schema.json");
+  REQUIRE(!isValid);
+}
+//TEST_CASE("Json not valid - out of range age given - min greater than max", "[json-reader]") {
+//  JsonReader jr;
+//  jr.OpenFile("test/json-test-files/test.json");
+//  rapidjson::Document* d = jr.GetJsonFilePtr();
+// (*d)["entries"][0]["age_range"]["min"] = 60;
+//  (*d)["entries"][0]["age_range"]["max"] = 40;
+//  bool isValid = jr.Validate("src/json-reader/giblet_accessories_schema.json");
+//  REQUIRE(!isValid);
+//}

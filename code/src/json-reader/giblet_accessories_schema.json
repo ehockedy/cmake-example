@@ -25,15 +25,11 @@
               "name": {
                 "allOf": [
                   { "$ref": "#/definitions/name" },
-                  { "enum": [
-                      "posh",
-                      "funny"
-                    ]
-                  }
+                  { "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/behaviours_enum"}
                 ]
               },
               "multiplier": {
-                "$ref": "#/definitions/multiplier"
+                "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/giblet_multiplier"
               }
             }  
           }
@@ -46,23 +42,32 @@
               "name": {
                 "allOf": [
                   { "$ref": "#/definitions/name" }, 
-                  { "enum": [
-                      "fancy",
-                      "weird",
-                      "smart"
-                  ] }
+                  { "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/styles_enum" }
                 ]
               },
               "multiplier": {
-                "$ref": "#/definitions/multiplier"
+                "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/giblet_multiplier"
               }
             }
           }
         },
         "cost": {
-          "type": "integer",
-          "minimum": 10,
-          "maximum": 500
+          "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/giblet_cost_range"
+        },
+        "age_range": {
+          "type": "object",
+          "description": "Range of consumer ages with which the item is compatiable and thus grants a multiplier", 
+          "properties": {
+            "min": {
+              "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/consumer_age_range"
+            }, 
+            "max": {
+              "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/consumer_age_range"
+            }, 
+            "multiplier": {
+              "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/giblet_multiplier"
+            }
+          }
         }
       }
     },
@@ -70,12 +75,6 @@
       "type" : "string",
       "description" : "Name of the object (accessory, behaviour, style) that will be shown to the user. Also the main identifier.",
       "pattern" : "^[a-zA-Z ]+$"
-    },
-    "multiplier": {
-      "type": "number",
-      "description": "Value corresponding to how compatiable this item is with a character with this behaviour",
-      "minimum": 0.25,
-      "maximum": 3
     }
   }
 }

@@ -1,4 +1,5 @@
 #include "reader.h"
+#include "remote-reader.h"
 
 #include <fstream>
 #include <iostream>
@@ -40,7 +41,9 @@ bool JsonReader::Validate(const char* schema_filename, bool print_error) {
     return false;
   }
   // Validate
-  rapidjson::SchemaDocument schema(schema_file);
+  RemoteSchemaProvider provider;
+  //if (provider) return false;
+  rapidjson::SchemaDocument schema(schema_file, 0, 0, &provider);
   rapidjson::SchemaValidator validator(schema);
   if (!json_file.Accept(validator)) {
     // Input json file does not line up with schema.

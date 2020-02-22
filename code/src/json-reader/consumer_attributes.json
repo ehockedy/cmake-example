@@ -1,0 +1,46 @@
+{
+  "definitions" : {
+    "behaviours_enum": {
+      "enum": [
+        "posh",
+        "funny"
+      ]
+    },
+    "styles_enum": {
+      "enum": [
+        "fancy",
+        "weird",
+        "smart"
+      ]
+    },
+    "consumer_names_enum": {
+      "enum": [
+        "Steven",
+        "Judy"
+      ]
+    },
+    "consumer_age_range": {
+      "type": "integer",
+      "minimum": 11,
+      "maximum": 99
+    },
+    "consumer_salary_range": {
+      "type": "integer",
+      "minimum":   10000,
+      "maximum":  100000,
+      "multipleOf": 1000 
+    },
+    "giblet_cost_range": {
+      "type": "integer",
+      "minimum":  10,
+      "maximum": 500,
+      "multipleOf": 10
+    },
+    "giblet_multiplier": {
+      "type": "number",
+      "description": "Value corresponding to how compatiable this item is with a character with this behaviour",
+      "minimum": 0.25,
+      "maximum": 3
+    }
+  }
+}

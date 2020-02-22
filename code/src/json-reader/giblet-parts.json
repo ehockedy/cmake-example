@@ -16,7 +16,7 @@
     }
   ],
   "cost" : 100,
-  "age" : {
+  "age_range" : {
     "min" : 40,
     "max" : 99,
     "multiplier": 2
@@ -41,7 +41,7 @@
     }
   ],
   "cost" : 30,
-  "age" : {
+  "age_range" : {
     "min" : 20,
     "max" : 79,
     "multiplier": 2 
@@ -62,7 +62,7 @@
     }
   ],
   "cost" : 20,
-  "age" : {
+  "age_range" : {
     "min" : 20,
     "max" : 45,
     "multiplier": 1.5

@@ -1,21 +1,22 @@
-#include "Giblet.h"
+#include "GibletPart.h"
+#include "json-reader"
 
-Giblet::Giblet() {
+GibletPart::GibletPart() {
 	id = "0";
 	name = "";
 }
 
-Giblet::~Giblet() {
+GibletPart::~GibletPart() {
 }
 
-void Giblet::SetName(std::string new_name) {
+void GibletPart::SetName(std::string new_name) {
 	name = new_name;
 }
 
-std::string Giblet::GetID() {
+std::string GibletPart::GetID() {
 	return id;
 }
 
-std::string Giblet::GetName() {
+std::string GibletPart::GetName() {
 	return name;
 }
