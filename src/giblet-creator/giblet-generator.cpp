@@ -17,9 +17,9 @@ GibletGenerator::~GibletGenerator() {
 }
 
 int GibletGenerator::GenerateUniqueAccessories(const unsigned int num_accessories) {
-  JsonReader jr;
-  if (!jr.OpenFile("src/json-reader/giblet-parts.json")) return 1;
-  if (!jr.Validate("src/json-reader/giblet_accessories_schema.json", true)) return 1;
+  JsonReader jr("src/json-reader/giblet-parts.json");
+  if (!jr.JsonLoaded()) return 1;
+  if (!jr.Validate("src/json-reader/giblet-accessories-schema.json", true)) return 1;
 
   unsigned int total_num_accessories = jr.GetJsonFileRef()["entries"].Size();
   if (total_num_accessories < num_accessories) {

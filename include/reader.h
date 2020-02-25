@@ -8,13 +8,17 @@
 
 class JsonReader {
 public:
-  JsonReader();
+  JsonReader(const char*);
   ~JsonReader();
-  bool OpenFile(const char* filename);
+  bool JsonLoaded();
   bool Validate(const char* schema_filename, bool print_error=false);
   void PrintJsonEntryWithName(std::string name);
   rapidjson::Document* GetJsonFilePtr();
   rapidjson::Document& GetJsonFileRef();
+  void PointerTest(const char* pointer_path);
+  bool SetValue(const char* key, const char* val);
+  bool SetValue(const char* key, const int val);
+  	
 private:
   rapidjson::Document json_file; 
 };

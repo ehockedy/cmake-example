@@ -5,27 +5,28 @@
 #include <iostream>
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/schema.h"
+#include "rapidjson/pointer.h"
 
-JsonReader::JsonReader() {}
-
-JsonReader::~JsonReader() {}
-
-bool JsonReader::OpenFile(const char* filename) {
+JsonReader::JsonReader(const char* filename) {
   FILE* fp = fopen(filename, "rb");
   char readBuffer[65536];
   rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
   if (fp == NULL) {
     std::cout << "Json file " << filename << " failed to open." << std::endl;
-    return false;
+    return;
   }
   if(json_file.ParseStream(is).HasParseError()) {
     std::cout << "Json file " << filename << " is invalid json." << std::endl;
-    return false;
+    return;
   }
-  return true;
 }
 
-// TODO remove repeated code
+JsonReader::~JsonReader() {}
+
+bool JsonReader::JsonLoaded() {
+  return !json_file.IsNull();
+}
+
 bool JsonReader::Validate(const char* schema_filename, bool print_error) {
   // Load schema file
   FILE* fp = fopen(schema_filename, "rb");
@@ -42,7 +43,6 @@ bool JsonReader::Validate(const char* schema_filename, bool print_error) {
   }
   // Validate
   RemoteSchemaProvider provider;
-  //if (provider) return false;
   rapidjson::SchemaDocument schema(schema_file, 0, 0, &provider);
   rapidjson::SchemaValidator validator(schema);
   if (!json_file.Accept(validator)) {
@@ -80,3 +80,24 @@ rapidjson::Document* JsonReader::GetJsonFilePtr() {
 rapidjson::Document& JsonReader::GetJsonFileRef() {
   return json_file;
 }
+
+void JsonReader::PointerTest(const char* pointer_path) {
+  std::cout << "EH: " << rapidjson::Pointer(pointer_path).Get(json_file)->GetString() << std::endl;
+}
+
+bool JsonReader::SetValue(const char* key, const char* val) {
+  rapidjson::Value* v = rapidjson::Pointer(key).Get(json_file);
+  if (!v->IsString()) return false;
+  v->SetString(val, 0);  // json_file.GetAllocator());
+  return true;
+}
+
+bool JsonReader::SetValue(const char* key, const int val) {
+  rapidjson::Value* v = rapidjson::Pointer(key).Get(json_file);
+  if (!v->IsNumber()) return false;
+
+  v->SetInt(val);
+  return true;
+}
+
+

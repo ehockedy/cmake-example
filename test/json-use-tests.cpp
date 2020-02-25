@@ -7,11 +7,10 @@
 #include "../include/reader.h"
 
 TEST_CASE("Can load member into new document", "[json-use]") {
-  JsonReader jr;
-  jr.OpenFile("test/json-test-files/test.json");
-  bool isValid = jr.Validate("src/json-reader/giblet_accessories_schema.json");
-  CHECK(isValid);
+  JsonReader jr("test/json-test-files/test.json");
+  CHECK(jr.Validate("src/json-reader/giblet-accessories-schema.json"));
 
+  // TODO change with new json maipulation style
   rapidjson::Document& old_doc = jr.GetJsonFileRef();
   rapidjson::Document  new_doc;
   new_doc.SetObject();

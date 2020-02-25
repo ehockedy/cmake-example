@@ -1,4 +1,5 @@
-#include<iostream>
+#include <iostream>
+#include <string>
 #include "giblet-generator.h"
  
 int main(int argc, char *argv[]){

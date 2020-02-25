@@ -25,11 +25,11 @@
               "name": {
                 "allOf": [
                   { "$ref": "#/definitions/name" },
-                  { "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/behaviours_enum"}
+                  { "$ref": "src/json-reader/consumer_attributes.json#/definitions/behaviours_enum"}
                 ]
               },
               "multiplier": {
-                "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/giblet_multiplier"
+                "$ref": "src/json-reader/consumer_attributes.json#/definitions/giblet_multiplier"
               }
             }  
           }
@@ -42,30 +42,30 @@
               "name": {
                 "allOf": [
                   { "$ref": "#/definitions/name" }, 
-                  { "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/styles_enum" }
+                  { "$ref": "src/json-reader/consumer_attributes.json#/definitions/styles_enum" }
                 ]
               },
               "multiplier": {
-                "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/giblet_multiplier"
+                "$ref": "src/json-reader/consumer_attributes.json#/definitions/giblet_multiplier"
               }
             }
           }
         },
         "cost": {
-          "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/giblet_cost_range"
+          "$ref": "src/json-reader/consumer_attributes.json#/definitions/giblet_cost_range"
         },
         "age_range": {
           "type": "object",
           "description": "Range of consumer ages with which the item is compatiable and thus grants a multiplier", 
           "properties": {
             "min": {
-              "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/consumer_age_range"
+              "$ref": "src/json-reader/consumer_attributes.json#/definitions/consumer_age_range"
             }, 
             "max": {
-              "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/consumer_age_range"
+              "$ref": "src/json-reader/consumer_attributes.json#/definitions/consumer_age_range"
             }, 
             "multiplier": {
-              "$ref": "/home/edhoc/git_repos/giblet-world/code/src/json-reader/consumer_attributes.json#/definitions/giblet_multiplier"
+              "$ref": "src/json-reader/consumer_attributes.json#/definitions/giblet_multiplier"
             }
           }
         }
