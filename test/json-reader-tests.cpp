@@ -25,8 +25,8 @@ TEST_CASE("Json not valid - invalid name", "[json-reader]") {
 
 TEST_CASE("Json not valid - invalid behaviour name", "[json-reader]") {
   JsonReader jr(test_json);
-  jr.SetValue("/entries/0/behaviours/0/name", 0); // THis doesnt seem to be right - seg fault on int
-  REQUIRE(!jr.Validate(schema_path));
+  REQUIRE(!jr.SetValue("/entries/0/behaviours/0/name", 0)); // THis doesnt seem to be right - seg fault on int
+  //REQUIRE(!jr.Validate(schema_path));
 }
 
 TEST_CASE("Json not valid - multiplier too big", "[json-reader]") {
@@ -49,8 +49,8 @@ TEST_CASE("Json not valid - invalid style name", "[json-reader]") {
 
 TEST_CASE("Json not valid - invalid style multiplier", "[json-reader]") {
   JsonReader jr(test_json);
-  jr.SetValue("/entries/0/styles/0/multiplier", "STRING");
-  REQUIRE(!jr.Validate(schema_path));
+  REQUIRE(!jr.SetValue("/entries/0/styles/0/multiplier", "STRING"));
+  //REQUIRE(!jr.Validate(schema_path));
 }
 
 TEST_CASE("Json not valid - style multiplier too small", "[json-reader]") {
@@ -67,8 +67,8 @@ TEST_CASE("Json not valid - style multiplier too big", "[json-reader]") {
 
 TEST_CASE("Json not valid - invalid cost", "[json-reader]") {
   JsonReader jr(test_json);
-  jr.SetValue("/entries/0/cost", "STRING");
-  REQUIRE(!jr.Validate(schema_path));
+  REQUIRE(!jr.SetValue("/entries/0/cost", "STRING"));
+  //REQUIRE(!jr.Validate(schema_path));
 }
 
 TEST_CASE("Json not valid - cost too big", "[json-reader]") {

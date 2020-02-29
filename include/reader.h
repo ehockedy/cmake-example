@@ -7,19 +7,22 @@
 #include "../third_party/rapidjson/stringbuffer.h"
 
 class JsonReader {
-public:
+ public:
   JsonReader(const char*);
   ~JsonReader();
+  
   bool JsonLoaded();
   bool Validate(const char* schema_filename, bool print_error=false);
-  void PrintJsonEntryWithName(std::string name);
-  rapidjson::Document* GetJsonFilePtr();
-  rapidjson::Document& GetJsonFileRef();
-  void PointerTest(const char* pointer_path);
+  
   bool SetValue(const char* key, const char* val);
   bool SetValue(const char* key, const int val);
-  	
-private:
+  
+  std::string GetString(const char* key, ...);
+  int GetInt(const char* key, ...);
+  unsigned int GetSize(const char* key, ...);
+
+ private:
+  std::string GenerateQueryString(const char* key, va_list vars);
   rapidjson::Document json_file; 
 };
 

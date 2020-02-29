@@ -15,8 +15,8 @@ const rapidjson::SchemaDocument* RemoteSchemaProvider::GetRemoteDocument(const c
   std::string extracted_uri = "";
   // Split on "#"
   int i = 0;
-  const char* char_to_split = "#";
-  while (i < length && uri[i] != '#') {
+  const char char_to_split = '#';
+  while (i < length && uri[i] != char_to_split) {
     extracted_uri+=uri[i];
     ++i;
   }

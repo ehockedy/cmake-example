@@ -5,4 +5,4 @@ Incorporate jsonlint into build script
 Add more json-parser tests
 Update test structure, i.e. muleiple excutables to save compile time when rebuilding tests?
 Add more functionality to json parser
-Rearrange json files and solve absolut paths
+Write tests for new variatic functions
