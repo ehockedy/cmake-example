@@ -6,3 +6,4 @@ Add more json-parser tests
 Update test structure, i.e. muleiple excutables to save compile time when rebuilding tests?
 Add more functionality to json parser
 Write tests for new variatic functions
+Make CMake remote gtest work when on/off line

@@ -7,7 +7,7 @@ class MinimalistPrinter : public ::testing::EmptyTestEventListener {
   }
 
   virtual void OnTestSuiteStart(const ::testing::TestSuite& test_suite) {
-    std::cout << "Running " << test_suite.name() << " tests" << std::endl;
+    std::cout << std::endl << "Running " << test_suite.name() << " tests" << std::endl;
   }
   
   // Called before a test starts.
@@ -32,6 +32,8 @@ class MinimalistPrinter : public ::testing::EmptyTestEventListener {
   virtual void OnTestEnd(const ::testing::TestInfo& test_info) {
     if (test_info.result()->Failed()) {
       std::cout << "  \033[1;31mTest " << test_info.name() << " FAILED\033[0m" << std::endl;
+    } else {
+      std::cout << "  \033[1;32mTest " << test_info.name() << " PASSED\033[0m" << std::endl;
     } 
   }
   

@@ -12,10 +12,6 @@ GibletAccessory::GibletAccessory() {
   name = "";
 }
 
-GibletAccessory::GibletAccessory(rapidjson::Document* object) {
-  name = (*object)["name"].GetString();
-}
-
 GibletAccessory::~GibletAccessory() {
 }
 

@@ -11,5 +11,6 @@ project (giblet-world)  # project name
 add_subdirectory(test)
 add_subdirectory(src/json-reader)
 add_subdirectory(src/giblet-creator)
+add_subdirectory(src/giblet-consumer)
 add_subdirectory(src/giblet-world)
 

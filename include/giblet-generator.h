@@ -1,7 +1,7 @@
 #ifndef INCLUDE_GIBLET_GENERATOR_H_
 #define INCLUDE_GIBLET_GENERATOR_H_
 
-#include "giblet-accessory.h"
+#include "giblet.h"
 
 #include "reader.h"
 
@@ -10,8 +10,9 @@ public:
   GibletGenerator();
   ~GibletGenerator();
   int GenerateUniqueAccessories(const unsigned int num_accessories);
+  Giblet& GetGiblet();
 private:
-  GibletAccessory accessory;
+  Giblet giblet;
 };
 
 # endif //INCLUDE_GIBLET_GENERATOR_H_

@@ -16,12 +16,13 @@ GibletGenerator::~GibletGenerator() {
 
 }
 
+// TODO accept number to choose argument
 int GibletGenerator::GenerateUniqueAccessories(const unsigned int num_accessories) {
   JsonReader jr("src/json-reader/giblet-parts.json");
   if (!jr.JsonLoaded()) return 1;
   if (!jr.Validate("src/json-reader/giblet-accessories-schema.json", true)) return 1;
 
-  unsigned int total_num_accessories = jr.GetSize("/entries"); //jr.GetJsonFileRef()["entries"].Size();
+  unsigned int total_num_accessories = jr.GetSize("/entries");
   if (total_num_accessories < num_accessories) {
     std::cout << "requested too many accessories" << std::endl;
     return 1;
@@ -35,11 +36,9 @@ int GibletGenerator::GenerateUniqueAccessories(const unsigned int num_accessorie
       std::cout << "Accessory " << accessories.size() + 1 << ":" << std::endl
                 << "Name: " 
                 << jr.GetString("/entries/%i/name", unique_accessory_idx) 
-                //<< jr.GetJsonFileRef()["entries"][unique_accessory_idx]["name"].GetString() 
                 << std::endl
                 << "Cost: "
                 << jr.GetInt("/entries/%i/cost", unique_accessory_idx)
-                //<< jr.GetJsonFileRef()["entries"][unique_accessory_idx]["cost"].GetInt()
                 << std::endl << std::endl;
       accessories.push_back(unique_accessory_idx);
     }
@@ -55,13 +54,18 @@ int GibletGenerator::GenerateUniqueAccessories(const unsigned int num_accessorie
     }
   }
   --accessory_idx; // Offset the +1 used for user input
-  
-  //accessory.SetName(jr.GetJsonFileRef()["entries"][accessories[accessory_idx]]["name"].GetString());
-
+  GibletAccessory accessory; 
   accessory.SetName(jr.GetString("/entries/%i/name", accessories[accessory_idx]));
 
   std::cout << "Name set for chosen accessory " << accessory.GetName() << std::endl;
 
+  giblet.AddAccessory(accessory);
+
   return 0;
 }
+
+Giblet& GibletGenerator::GetGiblet() {
+  return giblet;
+}
+
 
