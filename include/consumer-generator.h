@@ -14,7 +14,7 @@ class ConsumerGenerator {
   int GenerateUniqueConsumers(const unsigned int num_consumers);
   std::vector<Consumer>& GetConsumers();
   //static bool CalculateUsageRate(int i);
-  bool CalculateUsageRate(std::vector<Consumer>& consumers, Giblet& giblet);
+  static bool CalculateUsageRate(std::vector<Consumer>& consumers, Giblet& giblet);
  private:
   std::vector<Consumer> consumers;
 //private:

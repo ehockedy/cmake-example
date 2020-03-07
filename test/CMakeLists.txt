@@ -45,21 +45,27 @@ endif()
 
 
 # Catch2 tests
-add_executable(json-reader-tests json-reader-tests.cpp)
-add_dependencies(json-reader-tests json-reader)
-target_link_libraries(json-reader-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a gtest_main)
+#add_executable(json-reader-tests json-reader-tests.cpp)
+#add_dependencies(json-reader-tests json-reader)
+#target_link_libraries(json-reader-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a)
 
-add_executable(json-use-tests json-use-tests.cpp)
-add_dependencies(json-use-tests json-reader)
-target_link_libraries(json-use-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a gtest_main)
+#add_executable(json-use-tests json-use-tests.cpp)
+#add_dependencies(json-use-tests json-reader)
+#target_link_libraries(json-use-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a)
 
 
 
 # Gtests
 
 add_library(gtest_main_custom STATIC gtest_main_custom.cpp)
-target_link_libraries(gtest_main_custom ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a gtest)
+target_link_libraries(gtest_main_custom gtest)
 
-add_executable(json-reader-gtests json-reader-tests_gtest.cpp)
+add_executable(json-reader-tests json-reader-tests.cpp)
 #add_dependencies(json-reader-gtests json-reader)
-target_link_libraries(json-reader-gtests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a gtest_main_custom)
+target_link_libraries(json-reader-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a gtest_main_custom)
+
+add_executable(giblet-tests giblet-tests.cpp ../src/giblet-creator/giblet.cpp ../src/giblet-creator/giblet-accessory.cpp)
+target_link_libraries(giblet-tests gtest_main_custom)
+
+add_executable(json-use-tests json-use-tests.cpp)
+target_link_libraries(json-use-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a gtest_main_custom)

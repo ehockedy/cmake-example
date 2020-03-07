@@ -37,7 +37,6 @@ std::vector<Consumer>& ConsumerGenerator::GetConsumers() {
 }
 
 
-//static bool CalculateUsageRate(int i) {
 bool ConsumerGenerator::CalculateUsageRate(std::vector<Consumer>& consumers, Giblet& giblet) {
   for (auto& c : consumers) {
     std::cout << c.GetName() << std::endl;

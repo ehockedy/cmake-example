@@ -2,13 +2,13 @@
 #include <iostream>
 
 class MinimalistPrinter : public ::testing::EmptyTestEventListener {
-  virtual void OnTestProgramStart(const ::testing::UnitTest& unit_test) {
-    printf("Starting the Giblet World testing procedure\n");
-  }
+  //virtual void OnTestProgramStart(const ::testing::UnitTest& unit_test) {
+  //  printf("Starting the Giblet World testing procedure\n");
+  //}
 
-  virtual void OnTestSuiteStart(const ::testing::TestSuite& test_suite) {
-    std::cout << std::endl << "Running " << test_suite.name() << " tests" << std::endl;
-  }
+  //virtual void OnTestSuiteStart(const ::testing::TestSuite& test_suite) {
+  //  std::cout << std::endl << "Running " << test_suite.name() << " tests" << std::endl;
+  //}
   
   // Called before a test starts.
   //virtual void OnTestStart(const ::testing::TestInfo& test_info) {
@@ -29,13 +29,13 @@ class MinimalistPrinter : public ::testing::EmptyTestEventListener {
   //}
 
   // Called after a test ends.
-  virtual void OnTestEnd(const ::testing::TestInfo& test_info) {
-    if (test_info.result()->Failed()) {
-      std::cout << "  \033[1;31mTest " << test_info.name() << " FAILED\033[0m" << std::endl;
-    } else {
-      std::cout << "  \033[1;32mTest " << test_info.name() << " PASSED\033[0m" << std::endl;
-    } 
-  }
+  //virtual void OnTestEnd(const ::testing::TestInfo& test_info) {
+    //if (test_info.result()->Failed()) {
+    //  std::cout << "  \033[1;31mTest " << test_info.name() << " FAILED\033[0m" << std::endl;
+    //} else {
+     // std::cout << "  \033[1;32mTest " << test_info.name() << " PASSED\033[0m" << std::endl;
+    //} 
+  //}
   
   virtual void OnTestSuiteEnd(const ::testing::TestSuite& test_suite) {
     std::string status;

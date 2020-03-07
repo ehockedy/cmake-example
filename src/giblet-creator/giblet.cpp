@@ -1,4 +1,3 @@
-
 #include "giblet.h"
 
 #include <iostream>

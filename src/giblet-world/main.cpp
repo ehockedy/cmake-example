@@ -13,8 +13,7 @@ int main(int argc, char *argv[]){
   GibletGenerator gg;
   gg.GenerateUniqueAccessories(2);
 
-  //ConsumerGenerator::CalculateUsageRate(1);
-  cg.CalculateUsageRate(cg.GetConsumers(), gg.GetGiblet());
+  ConsumerGenerator::CalculateUsageRate(cg.GetConsumers(), gg.GetGiblet());
   
   
 
