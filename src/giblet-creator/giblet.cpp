@@ -30,3 +30,7 @@ bool Giblet::AddAccessory(GibletAccessory accessory) {
   return true;
 }
 
+unsigned int Giblet::GetAccessoryCount() {
+  return accessories.size();
+}
+//std::vector<GibletAccessories> Giblet::GetAccessories

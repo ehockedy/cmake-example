@@ -2,19 +2,35 @@
 #define INCLUDE_GIBLET_ACCESSORY_H_
 
 #include <string>
+#include <vector>
 #include "../third_party/rapidjson/document.h"
+
+struct attribute {
+  std::string name;
+  int multiplier;
+};
+
+struct range {
+  int min;
+  int max;
+  int multiplier;
+};
 
 class GibletAccessory {  // TODO inheret from giblet part
  public:
   GibletAccessory();
-  GibletAccessory(rapidjson::Document* object);
+  GibletAccessory(rapidjson::Value* object);
   ~GibletAccessory();
   void SetName(std::string name);
   std::string GetName();
   std::string GetID();
+  
  private:
-  std::string id;
   std::string name;
+  unsigned int cost;
+  std::vector<attribute> behaviours;
+  std::vector<attribute> styles;
+  range age_range;
 };
 
 #endif  // INCLUDE_GIBLET_ACCESSORY_H_

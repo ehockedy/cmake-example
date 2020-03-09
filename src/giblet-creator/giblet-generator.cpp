@@ -53,9 +53,7 @@ int GibletGenerator::GenerateUniqueAccessories(const unsigned int num_accessorie
       accessory_idx = 0;
     }
   }
-  --accessory_idx; // Offset the +1 used for user input
-  GibletAccessory accessory; 
-  accessory.SetName(jr.GetString("/entries/%i/name", accessories[accessory_idx]));
+  GibletAccessory accessory(jr.GetObjectPtr("/entries/%i", accessory_idx)); 
 
   std::cout << "Name set for chosen accessory " << accessory.GetName() << std::endl;
 

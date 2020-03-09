@@ -20,6 +20,7 @@ class JsonReader {
   std::string GetString(const char* key, ...);
   int GetInt(const char* key, ...);
   unsigned int GetSize(const char* key, ...);
+  rapidjson::Value* GetObjectPtr(const char* key, ...);
 
  private:
   std::string GenerateQueryString(const char* key, va_list vars);

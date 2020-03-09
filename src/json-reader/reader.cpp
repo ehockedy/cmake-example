@@ -146,6 +146,17 @@ unsigned int JsonReader::GetSize(const char* key, ...) {
   std::string json_query = GenerateQueryString(key, vars);
   va_end(vars);
   rapidjson::Value* v = rapidjson::Pointer(json_query.c_str()).Get(json_file);
-  if (v == nullptr) return 0; // TOD better ret value/error reporting
+  if (v == nullptr) return 0; // TODO better ret value/error reporting
   return v->Size();
+}
+
+rapidjson::Value* JsonReader::GetObjectPtr(const char* key, ...) {
+  va_list vars;
+  va_start(vars, key);
+  std::string json_query = GenerateQueryString(key, vars);
+  va_end(vars);
+  rapidjson::Value* v = rapidjson::Pointer(json_query.c_str()).Get(json_file);
+  if (v == nullptr) std::cout << "NULL pointer\n"; // TODO better ret value/error reporting
+  if (!v->IsObject()) std::cout << "NULL object\n"; // TODO better ret value/error reporting
+  return v;
 }

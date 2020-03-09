@@ -39,7 +39,12 @@ std::vector<Consumer>& ConsumerGenerator::GetConsumers() {
 
 bool ConsumerGenerator::CalculateUsageRate(std::vector<Consumer>& consumers, Giblet& giblet) {
   for (auto& c : consumers) {
-    std::cout << c.GetName() << std::endl;
+    std::cout << c.GetName() << ", "
+              << c.GetBehaviour() << std::endl;
+    for (unsigned a_idx = 0; a_idx < giblet.GetAccessoryCount(); ++a_idx) {
+      
+    }
+    
   }
 
   return true;

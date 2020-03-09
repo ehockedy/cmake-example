@@ -14,8 +14,6 @@ int main(int argc, char *argv[]){
   gg.GenerateUniqueAccessories(2);
 
   ConsumerGenerator::CalculateUsageRate(cg.GetConsumers(), gg.GetGiblet());
-  
-  
 
   return 0;
 }

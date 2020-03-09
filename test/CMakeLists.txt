@@ -69,3 +69,6 @@ target_link_libraries(giblet-tests gtest_main_custom)
 
 add_executable(json-use-tests json-use-tests.cpp)
 target_link_libraries(json-use-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a gtest_main_custom)
+
+add_executable(io-tests io-tests.cpp)
+target_link_libraries(io-tests ${CMAKE_SOURCE_DIR}/build/src/io/libio.a gtest_main_custom)

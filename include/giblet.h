@@ -12,6 +12,7 @@ class Giblet {
   std::string GetName();
   unsigned int GetCost();
   bool AddAccessory(GibletAccessory accessory);
+  unsigned int GetAccessoryCount();
  private:
   std::string name;
   unsigned int cost;
