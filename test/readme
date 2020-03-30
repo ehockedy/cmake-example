@@ -1,8 +1,5 @@
-Test suite used is Catch2 : https://github.com/catchorg/Catch2
+Test suite used is gtest
 
-Tests are compiled and executable tests places in build/tests/
+Tests are compiled and executables placed in build/tests/
 
-The following arguments may be useful when running the test executable
- - <test exe> "Test name"  # runs all tests that match given name
- - <test exe> "*est nam*"  # runs all tests that contain the substring
- - <test exe> [tag]        # runs all tests that have the given tag
+Test results are placed in build/test/test_results

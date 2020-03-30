@@ -11,7 +11,7 @@ cd build/
 
 # Call cmake on the directory containing CMakeLists and location of the source code
 # This generates the makefile
-cmake .. || exit 1  # exit of does not succeed
+cmake .. || exit 1  # exit if does not succeed
 
 # Execute the makefile generated above
 make || exit 1 #VERBOSE=1 # Uncomment the verbose to help if not building
@@ -22,6 +22,16 @@ echo ""
 echo "Linting json files"
 jsonlint-php src/json-reader/*.json
 
+# Run the tests one by one
 echo ""
+test_out_dir="build/test/test_results"
 echo "Running tests"
-run-parts ./build/test/
+
+for f in ./build/test/*
+do
+  if [[ -x "$f" && -f $f ]]  # Check if f is executable and a file
+  then
+    $f --gtest_output="xml:./$test_out_dir/$(basename $f)_results.xml" # direct gtest output
+  fi
+done
+echo "Test results written to $test_out_dir"
