@@ -61,8 +61,8 @@ add_library(gtest_main_custom STATIC gtest_main_custom.cpp)
 target_link_libraries(gtest_main_custom gtest)
 
 add_executable(json-reader-tests json-reader-tests.cpp)
-#add_dependencies(json-reader-gtests json-reader)
-target_link_libraries(json-reader-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a gtest_main_custom)
+add_dependencies(json-reader-tests json-reader)
+target_link_libraries(json-reader-tests json-reader gtest_main_custom)
 
 add_executable(giblet-tests giblet-tests.cpp ../src/giblet-creator/giblet.cpp ../src/giblet-creator/giblet-accessory.cpp)
 target_link_libraries(giblet-tests gtest_main_custom)
@@ -71,4 +71,6 @@ add_executable(json-use-tests json-use-tests.cpp)
 target_link_libraries(json-use-tests ${CMAKE_SOURCE_DIR}/build/src/json-reader/libjson-reader.a gtest_main_custom)
 
 add_executable(io-tests io-tests.cpp)
+add_dependencies(io-tests io)
 target_link_libraries(io-tests ${CMAKE_SOURCE_DIR}/build/src/io/libio.a gtest_main_custom)
+#target_link_libraries(io-tests ${CMAKE_SOURCE_DIR}/build/src/io/libio.a gtest_main_custom)

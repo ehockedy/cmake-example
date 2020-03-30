@@ -22,12 +22,11 @@ unsigned int Giblet::GetCost() {
 }
 
 bool Giblet::AddAccessory(GibletAccessory accessory) {
-  if (accessories.size() == max_accessories) {
-    std::cout << "Giblet accessory list full" << std::endl;
+  if (accessories.size() >= max_accessories) {
     return false;
   }
   accessories.push_back(accessory);
-  return true;
+  return true; // Index of accessory just aded
 }
 
 unsigned int Giblet::GetAccessoryCount() {

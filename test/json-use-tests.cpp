@@ -2,12 +2,23 @@
 
 #include <gtest/gtest.h>
 #include "../include/reader.h"
+#include "../include/io.h"
 
-const char* test_file = "test/json-test-files/test.json";
+const char* test_json = "test/json-test-files/test.json";
 const char* schema_file = "src/json-reader/giblet-accessories-schema.json";
+class JsonUseTest : public ::testing::Test {
+ protected:
+  JsonUseTest() : jr(test_json, out) {
+    out.SetModeSuppressed();
 
-TEST(JsonUse, InvalidStringMemberRequested) {
-  JsonReader jr(test_file);
+  }
+  ~JsonUseTest() {}
+
+  Outputter out;
+  JsonReader jr;
+};
+
+TEST_F(JsonUseTest, InvalidStringMemberRequested) {
   ASSERT_TRUE(jr.GetString("husehufh") == "");
   //REQUIRE(jr.GetString("/entries/100") == "");
   //REQUIRE(jr.GetString("entries/0") == "");

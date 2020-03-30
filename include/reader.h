@@ -5,10 +5,11 @@
 #include "../third_party/rapidjson/document.h"
 #include "../third_party/rapidjson/writer.h"
 #include "../third_party/rapidjson/stringbuffer.h"
+#include "io.h"
 
 class JsonReader {
  public:
-  JsonReader(const char*);
+  JsonReader(const char*, Outputter& out);
   ~JsonReader();
   
   bool JsonLoaded();
@@ -23,6 +24,7 @@ class JsonReader {
   rapidjson::Value* GetObjectPtr(const char* key, ...);
 
  private:
+  Outputter& out;
   std::string GenerateQueryString(const char* key, va_list vars);
   rapidjson::Document json_file; 
 };

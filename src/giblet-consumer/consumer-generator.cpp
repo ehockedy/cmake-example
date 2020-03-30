@@ -8,11 +8,13 @@
 #include <iostream>
 #include <vector>
 
-ConsumerGenerator::ConsumerGenerator() {}
+ConsumerGenerator::ConsumerGenerator(Outputter& o, Inputter& i) :
+  out(o), in(i) {}
+
 ConsumerGenerator::~ConsumerGenerator() {}
 
 int ConsumerGenerator::GenerateUniqueConsumers(const unsigned int num_consumers) {
-  JsonReader jr("src/json-reader/consumer_attributes.json");
+  JsonReader jr("src/json-reader/consumer_attributes.json", out);
   if (!jr.JsonLoaded()) return 1;
   //if (!jr.Validate("src/json-reader/giblet-accessories-schema.json", true)) return 1;
   // TODO is there something to validat with?

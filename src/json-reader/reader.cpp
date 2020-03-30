@@ -1,5 +1,6 @@
 #include "reader.h"
 #include "remote-reader.h"
+#include "io.h"
 
 #include <fstream>
 #include <iostream>
@@ -9,16 +10,17 @@
 #include "rapidjson/schema.h"
 #include "rapidjson/pointer.h"
 
-JsonReader::JsonReader(const char* filename) {
+JsonReader::JsonReader(const char* filename, Outputter& o) :
+  out(o) {
   FILE* fp = fopen(filename, "rb");
   char readBuffer[65536];
   rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
   if (fp == NULL) {
-    std::cout << "Json file " << filename << " failed to open." << std::endl;
+    out << "Json file " << filename << " failed to open.\n";
     return;
   }
   if(json_file.ParseStream(is).HasParseError()) {
-    std::cout << "Json file " << filename << " is invalid json." << std::endl;
+    out << "Json file " << filename << " is invalid json.\n";
     return;
   }
 }
@@ -35,12 +37,12 @@ bool JsonReader::Validate(const char* schema_filename, bool print_error) {
   char readBuffer[65536];
   rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
   if (fp == NULL) {
-    std::cout << "Schema file " << schema_filename << " failed to open." << std::endl;
+    out << "Schema file " << schema_filename << " failed to open.\n";
     return false;
   }
   rapidjson::Document schema_file;
   if(schema_file.ParseStream(is).HasParseError()) {
-    std::cout << "Schema file " << schema_filename << " is invalid json." << std::endl;
+    out << "Schema file " << schema_filename << " is invalid json.\n";
     return false;
   }
   // Validate
@@ -52,11 +54,11 @@ bool JsonReader::Validate(const char* schema_filename, bool print_error) {
     if (print_error) {
       rapidjson::StringBuffer sb;
       validator.GetInvalidSchemaPointer().StringifyUriFragment(sb);
-      printf("Invalid schema: %s\n", sb.GetString());
-      printf("Invalid keyword: %s\n", validator.GetInvalidSchemaKeyword());
+      out << "Invalid schema: " << sb.GetString() << "\n";
+      out << "Invalid keyword: " << validator.GetInvalidSchemaKeyword() << "\n";
       sb.Clear();
       validator.GetInvalidDocumentPointer().StringifyUriFragment(sb);
-      printf("Invalid document: %s\n", sb.GetString());
+      out << "Invalid document: " << sb.GetString() << "\n";
     }
     return false;
   }
@@ -81,7 +83,7 @@ bool JsonReader::SetValue(const char* key, const int val) {
 
 std::string JsonReader::GenerateQueryString(const char* key, va_list vars) {
   if (key[0] != '/') {
-    std::cout << "Invalid query string \"" << key << "\" must start with /" << std::endl;
+    out << "Invalid query string \"" << key << "\" must start with /\n";
     return "";
   }
   std::string json_query = "";
@@ -105,7 +107,7 @@ std::string JsonReader::GenerateQueryString(const char* key, va_list vars) {
           break;
         default:
           // TODO throw exception
-          std::cout << "ERROR: invalid json reader query type given" << std::endl;
+          out << "ERROR: invalid json reader query type given\n";
           return "";
       }
     } else { // standard character in the query
@@ -156,7 +158,7 @@ rapidjson::Value* JsonReader::GetObjectPtr(const char* key, ...) {
   std::string json_query = GenerateQueryString(key, vars);
   va_end(vars);
   rapidjson::Value* v = rapidjson::Pointer(json_query.c_str()).Get(json_file);
-  if (v == nullptr) std::cout << "NULL pointer\n"; // TODO better ret value/error reporting
-  if (!v->IsObject()) std::cout << "NULL object\n"; // TODO better ret value/error reporting
+  if (v == nullptr) out << "NULL pointer\n"; // TODO better ret value/error reporting
+  if (!v->IsObject()) out << "NULL object\n"; // TODO better ret value/error reporting
   return v;
 }

@@ -2,15 +2,19 @@
 #include <string>
 #include "giblet-generator.h"
 #include "consumer-generator.h"
+#include "io.h"
  
 int main(int argc, char *argv[]){
-  std::cout << "Welcome to the Giblet(tm) factory" << std::endl;
+  Outputter out;
+  Inputter in;
+
+  out << "Welcome to the Giblet(tm) factory\n";
 
   // Set up world //TODO put this in a set up call
-  ConsumerGenerator cg;
+  ConsumerGenerator cg(out, in);
   cg.GenerateUniqueConsumers(1);
 
-  GibletGenerator gg;
+  GibletGenerator gg(out, in);
   gg.GenerateUniqueAccessories(2);
 
   ConsumerGenerator::CalculateUsageRate(cg.GetConsumers(), gg.GetGiblet());
