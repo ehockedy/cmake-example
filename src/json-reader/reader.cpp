@@ -46,7 +46,7 @@ bool JsonReader::Validate(const char* schema_filename, bool print_error) {
     return false;
   }
   // Validate
-  RemoteSchemaProvider provider;
+  RemoteSchemaProvider provider(out);
   rapidjson::SchemaDocument schema(schema_file, 0, 0, &provider);
   rapidjson::SchemaValidator validator(schema);
   if (!json_file.Accept(validator)) {

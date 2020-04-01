@@ -1,9 +1,8 @@
-Move include file, or restructure better
-Deal with dependencies better, externs maybe
- - jsonlint
 Incorporate jsonlint into build script
-Add more json-parser tests
-Update test structure, i.e. muleiple excutables to save compile time when rebuilding tests?
-Add more functionality to json parser
 Write tests for new variatic functions
 Make CMake remote gtest work when on/off line
+Update system diagram
+Add functionality to custom inputter
+Add functionality to rate calculation
+More unit tests
+Comments and more documentation

@@ -2,11 +2,12 @@
 #define INCLUDE_IO_H_ 
 
 #include <iostream>
+#include <fstream>
 
 enum outputter_mode {
-  standard, // print to terminal
-  suppressed, // dont print to terminal
-  logger       // write to log file
+  standard,    // print to terminal
+  logger,      // write to log file
+  suppressed   // don't do anything
 };
 
 class Outputter : public std::ostream {
@@ -15,12 +16,17 @@ class Outputter : public std::ostream {
   ~Outputter() {};
   void SetModeStandard() {mode = outputter_mode::standard;}
   void SetModeSuppressed() {mode = outputter_mode::suppressed;}
-  void SetModeLogger() {mode = outputter_mode::logger;}
+  void SetModeLogger(const char* filename) {
+    log_file.open(filename, std::ofstream::out | std::ofstream::trunc); // Overwrite mode
+    mode = outputter_mode::logger;
+  }
+  
   template <class T>
   Outputter& operator<<(const T& value);
   Outputter& operator<<(std::ostream& (*f)(std::ostream&)) = delete; // Stop use of std::endl
  private:
   outputter_mode mode = standard;
+  std::ofstream log_file;
 };
 
 // These templated definitions must go in .h not .cpp
@@ -33,8 +39,9 @@ Outputter& Outputter::operator<<(const T& value) {
     case outputter_mode::standard:
       std::cout << value;
       break;
-    case outputter_mode::suppressed:
     case outputter_mode::logger:
+      log_file << value;
+    case outputter_mode::suppressed:
     default:
       break;
   }

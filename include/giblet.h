@@ -9,13 +9,9 @@ class Giblet {
  public:
   Giblet();
   ~Giblet();   
-  std::string GetName();
-  unsigned int GetCost();
   bool AddAccessory(GibletAccessory accessory);
   unsigned int GetAccessoryCount();
  private:
-  std::string name;
-  unsigned int cost;
   std::vector<GibletAccessory> accessories;
   const unsigned int max_accessories = 5;
 };

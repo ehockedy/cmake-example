@@ -5,20 +5,10 @@
 #include <vector>
 
 Giblet::Giblet(){
-  name = "";
-  cost = 0;
   accessories = {};
 }
 
 Giblet::~Giblet(){
-}
-
-std::string Giblet::GetName() {
-  return name;
-}
-
-unsigned int Giblet::GetCost() {
-  return cost;
 }
 
 bool Giblet::AddAccessory(GibletAccessory accessory) {
@@ -32,4 +22,4 @@ bool Giblet::AddAccessory(GibletAccessory accessory) {
 unsigned int Giblet::GetAccessoryCount() {
   return accessories.size();
 }
-//std::vector<GibletAccessories> Giblet::GetAccessories
+
