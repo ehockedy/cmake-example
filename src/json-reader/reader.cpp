@@ -1,7 +1,7 @@
 #include "reader.h"
 #include "remote-reader.h"
 #include "io.h"
-
+#include <exception>
 #include <fstream>
 #include <iostream>
 #include <stdarg.h>
@@ -9,6 +9,16 @@
 #include "rapidjson/filereadstream.h"
 #include "rapidjson/schema.h"
 #include "rapidjson/pointer.h"
+
+/**class InvalidQueryException : public std::exception {
+ public:
+  InvalidQueryException(std::string q) : query(q) {}
+  const char* what () const throw () {
+    return ("Invalid Json query given: " + query).c_str();
+  }
+ private:
+  std::string query;
+};*/
 
 JsonReader::JsonReader(const char* filename, Outputter& o) :
   out(o) {
@@ -82,9 +92,13 @@ bool JsonReader::SetValue(const char* key, const int val) {
 
 
 std::string JsonReader::GenerateQueryString(const char* key, va_list vars) {
+  if (key[0] == '\0') {
+    out << "Invalid query string - must not be empty\n";
+    throw InvalidQueryException(std::string(key));
+  }
   if (key[0] != '/') {
     out << "Invalid query string \"" << key << "\" must start with /\n";
-    return "";
+    throw InvalidQueryException(std::string(key));
   }
   std::string json_query = "";
   // Split on %x where x indicates the type
@@ -97,6 +111,7 @@ std::string JsonReader::GenerateQueryString(const char* key, va_list vars) {
     //printf("%c ", key[i]);
     if (key[i] == char_to_split) {
       //printf("   symbol found");
+      if (key[i] == '\0') throw InvalidQueryException(std::string(key)); // % without a character after
       ++i;  // Advance to the type character
       switch (key[i]) {  // Decide the type
         case 's':
@@ -108,7 +123,9 @@ std::string JsonReader::GenerateQueryString(const char* key, va_list vars) {
         default:
           // TODO throw exception
           out << "ERROR: invalid json reader query type given\n";
-          return "";
+          json_query += char_to_split;
+          json_query += key[i];
+          throw InvalidQueryException(json_query); // Throw at the point of the error
       }
     } else { // standard character in the query
       json_query += key[i]; 
@@ -124,8 +141,9 @@ std::string JsonReader::GetString(const char* key, ...) {
   std::string json_query = GenerateQueryString(key, vars);
   va_end(vars);
 
+  if (json_query[0] != '/') throw InvalidQueryException(std::string(key));
   rapidjson::Value* v = rapidjson::Pointer(json_query.c_str()).Get(json_file);
-  if (v == nullptr) return ""; // TODO better return value as this could be valid json
+  if (v == nullptr) throw InvalidQueryException(json_query); // TODO better return value as this could be valid json
   if (!v->IsString()) return ""; // TODO throw exception?
   return v->GetString();
 }

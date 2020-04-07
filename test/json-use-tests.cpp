@@ -7,16 +7,6 @@
 
 const char* test_json = "test/json-test-files/test.json";
 const char* schema_file = "src/json-reader/giblet-accessories-schema.json";
-class JsonUseTest : public ::testing::Test {
- protected:
-  JsonUseTest() : jr(test_json, out) {
-    out.SetModeSuppressed();
-  }
-  ~JsonUseTest() {}
-
-  Outputter out;
-  JsonReader jr;
-};
 
 class JsonRemoteReaderUseTest : public ::testing::Test {
  protected:
@@ -29,12 +19,35 @@ class JsonRemoteReaderUseTest : public ::testing::Test {
   RemoteSchemaProvider rsp;
 };
 
-TEST_F(JsonUseTest, InvalidStringMemberRequested) {
-  ASSERT_TRUE(jr.GetString("husehufh") == "");
+TEST_F(JsonRemoteReaderUseTest, EmptyStringGiven) {
+  //out.SetModeLogger("build/test/test_results/JsonRemoteReaderUseTestEmptyStringGiven.txt"); //TODO set logger path better
+  ASSERT_TRUE(rsp.GetRemoteDocument("", 0) == NULL);
 }
 
-TEST_F(JsonRemoteReaderUseTest, EmptyStringGiven) {
-  out.SetModeLogger("build/test/test_results/JsonRemoteReaderUseTestEmptyStringGiven.txt"); //TODO set logger path better
-  const rapidjson::SchemaDocument* sd = rsp.GetRemoteDocument("", 0);
-  ASSERT_TRUE(sd == NULL);  
+class JsonUseTest : public ::testing::Test {
+ protected:
+  JsonUseTest() : jr(test_json, out) {
+    out.SetModeSuppressed();
+  }
+  ~JsonUseTest() {}
+
+  Outputter out;
+  JsonReader jr;
+};
+
+TEST_F(JsonUseTest, InvalidStringMemberRequested) {
+  ASSERT_THROW(jr.GetString("husehufh"), InvalidQueryException);
+}
+
+
+TEST_F(JsonUseTest, TooManyPlaceholdersGiven) {
+  ASSERT_THROW(jr.GetString("/entries/%i/behaviours/%i/name/%i", 0, 0), InvalidQueryException); // Name doe not have any properties
+}
+
+TEST_F(JsonUseTest, PropertyDoesNotExist) {
+  ASSERT_THROW(jr.GetString("/entries/%i/behaviours/%i/ABCDEFG", 0, 0), InvalidQueryException);
+}
+
+TEST_F(JsonUseTest, MissingFrontSlash) {
+  ASSERT_THROW(jr.GetString("entries/%i/behaviours/%i/name", 0, 0), InvalidQueryException);
 }

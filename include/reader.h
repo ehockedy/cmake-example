@@ -29,4 +29,14 @@ class JsonReader {
   rapidjson::Document json_file; 
 };
 
+class InvalidQueryException : public std::exception {
+ public:
+  InvalidQueryException(std::string q) : query(q) {}
+  const char* what () const throw () {
+    return ("Invalid Json query given: " + query).c_str();
+  }
+ private:
+  std::string query;
+};
+
 #endif  // SRC_JSON_READER_READER_H_
