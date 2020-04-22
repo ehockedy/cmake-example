@@ -10,6 +10,13 @@ enum outputter_mode {
   suppressed   // don't do anything
 };
 
+
+/* Custom output class to toggle output on/off for tests
+ * Usage should create a single instance at the start, then pass the logger
+ * to other classes by reference.
+ * The single instance behaviour is not enforced, however.
+ * Not that usage of std::endl has ben removed. Use \n instead
+ */
 class Outputter : public std::ostream {
  public:
   Outputter() {};

@@ -13,7 +13,7 @@ class JsonReader {
   ~JsonReader();
   
   bool JsonLoaded();
-  bool Validate(const char* schema_filename, bool print_error=false);
+  bool Validate(const char* schema_filename);
   
   bool SetValue(const char* key, const char* val);
   bool SetValue(const char* key, const int val);
@@ -31,12 +31,13 @@ class JsonReader {
 
 class InvalidQueryException : public std::exception {
  public:
-  InvalidQueryException(std::string q) : query(q) {}
-  const char* what () const throw () {
-    return ("Invalid Json query given: " + query).c_str();
+  InvalidQueryException(std::string query, std::string issue) : 
+    msg("Invalid json query given: " + query + "\nIssue: " + issue) {} // Construct message here, otherswise pointer returned by what() is deallocated since the returned object is destroyed
+  const char* what() const throw () {
+    return msg.c_str();
   }
  private:
-  std::string query;
+  std::string msg;
 };
 
 #endif  // SRC_JSON_READER_READER_H_

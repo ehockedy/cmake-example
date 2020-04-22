@@ -23,3 +23,22 @@ unsigned int Giblet::GetAccessoryCount() {
   return accessories.size();
 }
 
+// To prevent requesting with an invalid index, only allow cycling through them
+// rReturns the accessory that is at the index value of idx_
+GibletAccessory Giblet::GetNextAccessory() {
+  GibletAccessory& acc = accessories[idx_];
+  idx_ = (idx_ + 1) % accessories.size();
+  return acc;
+}
+
+unsigned int Giblet::GetAccessoryIndex() {
+  return idx_;
+}
+
+void Giblet::AdvanceAccessoryIndex() {
+  ++idx_;
+}
+
+void Giblet::ResetAccessoryIndex() {
+  idx_ = 0;
+}

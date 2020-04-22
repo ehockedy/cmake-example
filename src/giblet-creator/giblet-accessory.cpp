@@ -46,3 +46,9 @@ void GibletAccessory::SetName(std::string new_name) {
 std::string GibletAccessory::GetName() {
   return name;
 }
+
+attribute GibletAccessory::GetNextBehaviour() {
+  attribute& att = behaviours[idx_];
+  idx_ = (idx_ + 1) % behaviours.size();
+  return att;
+}

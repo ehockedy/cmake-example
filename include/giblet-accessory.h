@@ -24,6 +24,8 @@ class GibletAccessory {  // TODO inheret from giblet part
   void SetName(std::string name);
   std::string GetName();
   std::string GetID();
+  attribute GetNextBehaviour();
+  unsigned int GetNumBehaviours() {return behaviours.size();}
   
  private:
   std::string name;
@@ -31,6 +33,7 @@ class GibletAccessory {  // TODO inheret from giblet part
   std::vector<attribute> behaviours;
   std::vector<attribute> styles;
   range age_range;
+  unsigned int idx_;
 };
 
 #endif  // INCLUDE_GIBLET_ACCESSORY_H_

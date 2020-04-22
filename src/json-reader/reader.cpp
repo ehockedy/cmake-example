@@ -41,7 +41,7 @@ bool JsonReader::JsonLoaded() {
   return !json_file.IsNull();
 }
 
-bool JsonReader::Validate(const char* schema_filename, bool print_error) {
+bool JsonReader::Validate(const char* schema_filename) {
   // Load schema file
   FILE* fp = fopen(schema_filename, "rb");
   char readBuffer[65536];
@@ -61,15 +61,13 @@ bool JsonReader::Validate(const char* schema_filename, bool print_error) {
   rapidjson::SchemaValidator validator(schema);
   if (!json_file.Accept(validator)) {
     // Input json file does not line up with schema.
-    if (print_error) {
-      rapidjson::StringBuffer sb;
-      validator.GetInvalidSchemaPointer().StringifyUriFragment(sb);
-      out << "Invalid schema: " << sb.GetString() << "\n";
-      out << "Invalid keyword: " << validator.GetInvalidSchemaKeyword() << "\n";
-      sb.Clear();
-      validator.GetInvalidDocumentPointer().StringifyUriFragment(sb);
-      out << "Invalid document: " << sb.GetString() << "\n";
-    }
+    rapidjson::StringBuffer sb;
+    validator.GetInvalidSchemaPointer().StringifyUriFragment(sb);
+    out << "Invalid schema: " << sb.GetString() << "\n";
+    out << "Invalid keyword: " << validator.GetInvalidSchemaKeyword() << "\n";
+    sb.Clear();
+    validator.GetInvalidDocumentPointer().StringifyUriFragment(sb);
+    out << "Invalid document: " << sb.GetString() << "\n";
     return false;
   }
   return true;
@@ -93,12 +91,10 @@ bool JsonReader::SetValue(const char* key, const int val) {
 
 std::string JsonReader::GenerateQueryString(const char* key, va_list vars) {
   if (key[0] == '\0') {
-    out << "Invalid query string - must not be empty\n";
-    throw InvalidQueryException(std::string(key));
+    throw InvalidQueryException(std::string(key), "query must not be empty");
   }
   if (key[0] != '/') {
-    out << "Invalid query string \"" << key << "\" must start with /\n";
-    throw InvalidQueryException(std::string(key));
+    throw InvalidQueryException(std::string(key), "missing \"/\" at start");
   }
   std::string json_query = "";
   // Split on %x where x indicates the type
@@ -108,11 +104,8 @@ std::string JsonReader::GenerateQueryString(const char* key, va_list vars) {
   int i = 0;
   const char char_to_split = '%';  //TODO have escape character option
   while (key[i] != '\0') {  // Until end of char array
-    //printf("%c ", key[i]);
     if (key[i] == char_to_split) {
-      //printf("   symbol found");
-      if (key[i] == '\0') throw InvalidQueryException(std::string(key)); // % without a character after
-      ++i;  // Advance to the type character
+      ++i;  // Advance to the type character - since is not end of string char, safe to increment
       switch (key[i]) {  // Decide the type
         case 's':
           json_query += va_arg(vars, char*);
@@ -121,11 +114,9 @@ std::string JsonReader::GenerateQueryString(const char* key, va_list vars) {
           json_query += std::to_string(va_arg(vars, int));
           break;
         default:
-          // TODO throw exception
-          out << "ERROR: invalid json reader query type given\n";
           json_query += char_to_split;
           json_query += key[i];
-          throw InvalidQueryException(json_query); // Throw at the point of the error
+          throw InvalidQueryException(json_query, "invalid query type"); // Throw at the point of the error
       }
     } else { // standard character in the query
       json_query += key[i]; 
@@ -140,11 +131,9 @@ std::string JsonReader::GetString(const char* key, ...) {
   va_start(vars, key);
   std::string json_query = GenerateQueryString(key, vars);
   va_end(vars);
-
-  if (json_query[0] != '/') throw InvalidQueryException(std::string(key));
   rapidjson::Value* v = rapidjson::Pointer(json_query.c_str()).Get(json_file);
-  if (v == nullptr) throw InvalidQueryException(json_query); // TODO better return value as this could be valid json
-  if (!v->IsString()) return ""; // TODO throw exception?
+  if (v == nullptr) throw InvalidQueryException(json_query, "query returned nullptr");
+  if (!v->IsString()) throw InvalidQueryException(json_query, "query did not return string");
   return v->GetString();
 }
 
@@ -153,10 +142,9 @@ int JsonReader::GetInt(const char* key, ...) {
   va_start(vars, key);
   std::string json_query = GenerateQueryString(key, vars);
   va_end(vars);
-
   rapidjson::Value* v = rapidjson::Pointer(json_query.c_str()).Get(json_file);
-  if (v == nullptr) return -1;
-  if (!v->IsNumber()) return -1; // TODO throw exception?
+  if (v == nullptr) throw InvalidQueryException(json_query, "query returned nullptr");
+  if (!v->IsInt()) throw InvalidQueryException(json_query, "query did not return number");
   return v->GetInt();
 }
 
@@ -166,7 +154,7 @@ unsigned int JsonReader::GetSize(const char* key, ...) {
   std::string json_query = GenerateQueryString(key, vars);
   va_end(vars);
   rapidjson::Value* v = rapidjson::Pointer(json_query.c_str()).Get(json_file);
-  if (v == nullptr) return 0; // TODO better ret value/error reporting
+  if (v == nullptr) throw InvalidQueryException(json_query, "query returned nullptr");
   return v->Size();
 }
 
@@ -176,7 +164,7 @@ rapidjson::Value* JsonReader::GetObjectPtr(const char* key, ...) {
   std::string json_query = GenerateQueryString(key, vars);
   va_end(vars);
   rapidjson::Value* v = rapidjson::Pointer(json_query.c_str()).Get(json_file);
-  if (v == nullptr) out << "NULL pointer\n"; // TODO better ret value/error reporting
-  if (!v->IsObject()) out << "NULL object\n"; // TODO better ret value/error reporting
+  if (v == nullptr) throw InvalidQueryException(json_query, "query returned nullptr");
+  if (!v->IsObject()) throw InvalidQueryException(json_query, "query did not return object");
   return v;
 }

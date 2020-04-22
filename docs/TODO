@@ -1,5 +1,4 @@
 Incorporate jsonlint into build script
-Write tests for new variatic functions
 Make CMake remote gtest work when on/off line
 Update system diagram
 Add functionality to custom inputter
